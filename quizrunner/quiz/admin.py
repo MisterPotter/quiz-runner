@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Rule, RuleException
+
+admin.site.register(Rule)
+admin.site.register(RuleException)
