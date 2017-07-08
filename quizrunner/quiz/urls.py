@@ -1,9 +1,8 @@
 from django.conf.urls import url
 
-from . import views
+from quiz.views import RuleList
 
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
-    url(r'^exceptions/', views.exceptions, name='exceptions'),
+    url(r'^$', RuleList.as_view(), name='flash_cards'),
 ]

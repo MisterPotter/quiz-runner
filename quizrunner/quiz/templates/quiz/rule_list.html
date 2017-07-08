@@ -1,0 +1,59 @@
+{% extends 'quiz/base.html' %}
+
+{% block content %}
+    <h2>All rules</h2>
+
+    <ul class="collapsible popout" data-collapsible="accordion">
+        {% for question in rule_list %}
+            <li>
+                <div class="collapsible-header blue-grey lighten-4 flow-text">{{ question.name }}</div>
+                <div class="collapsible-body blue-grey lighten-4">
+                    <p class="flow-text">{{ question.description }}</p>
+                    {% with exception_set=question.ruleexception_set.all %}
+                        {% if exception_set %}
+                            <a
+                                    class="show-exceptions btn black-text cyan accent-2">
+                                toggle exceptions
+                            </a>
+                            <div class="exception-cards">
+                                <ul>
+                                    {% for exception in exception_set %}
+                                        <li>
+                                            <div class="card">
+                                                <div class="card-content">
+                                                    <span class="card-title activator grey-text text-darken-4">
+                                                        {{ exception.name }}<i class="material-icons right">more_vert</i>
+                                                    </span>
+                                                </div>
+                                                <div class="card-reveal">
+                                                    <span class="card-title grey-text text-darken-4">
+                                                        <i class="material-icons right">close</i>
+                                                    </span>
+                                                    <p>
+                                                        {{ exception.description }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+{% block javascripts%}
+    <script>
+        $(document).ready(function(){
+            $('.collapsible').collapsible();
+
+            $('.show-exceptions').click(function() {
+                $(this).siblings('.exception-cards').fadeToggle()
+            });
+        });
+    </script>
+{% endblock %}

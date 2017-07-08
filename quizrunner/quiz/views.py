@@ -1,14 +1,13 @@
 from django.shortcuts import render
+from django.views.generic import ListView
 
 from material import Layout, Row, Fieldset
 from material.frontend.views import ModelViewSet
 
-from .models import RuleException
+from .models import Rule, RuleException
 
 
-def index(request):
-    return render(request, 'quiz/index.html')
-
-
-def exceptions(request):
-    return render(request, 'quiz/exceptions.html')
+class RuleList(ListView):
+    queryset = Rule.objects.all()
+    context_object_name = 'rule_list'
+    template_name = 'quiz/rule_list.html'
