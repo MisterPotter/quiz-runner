@@ -1,0 +1,17 @@
+{% extends 'quiz/base.html' %}
+
+{% block content %}
+    <h2>Quiz Options</h2>
+    <div class="row">
+        <a href="#" class="waves-effect waves-light btn-large">
+            <i class="material-icons left">shuffle</i>
+            Mix and match rules
+            <i class="material-icons right">done</i>
+        </a>
+        <a href="{% url 'quiz_exceptions_start' %}" class="waves-effect waves-light btn-large">
+            <i class="material-icons left">shuffle</i>
+            Mix and match exceptions
+            <i class="material-icons right">not_interested</i>
+        </a>
+    </div>
+{% endblock %}

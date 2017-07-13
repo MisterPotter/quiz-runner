@@ -55,10 +55,10 @@ class Quiz(models.Model):
     """A quiz to score a user based on their knowledge of rules and exceptions.
 
     """
-    creation_date = models.DateTimeField('date created')
+    creation_date = models.DateTimeField('date created', auto_now_add=True, blank=True)
 
     def __str__(self):
-        '({date})'.format(date=self.creation_date)
+        return '({id}, {date})'.format(id=self.id, date=self.creation_date)
 
     @property
     def done(self):
@@ -77,6 +77,13 @@ class Question(models.Model):
     )
     quiz = models.ForeignKey(Quiz)
 
+    def __str__(self):
+        return '({id}, {status}, {quiz})'.format(
+            id=self.id,
+            status=self.status,
+            quiz=self.quiz.id
+        )
+
 
 class Answer(models.Model):
     """An answer to a question.
@@ -87,22 +94,8 @@ class Answer(models.Model):
     correct = models.BooleanField(default=False)
     picked = models.BooleanField(default=False)
 
-    limit = models.Q(app_label='quiz', model='rule') | \
-        models.Q(app_label='quiz', model='ruleexception')
-    content_type = models.ForeignKey(
-        ContentType,
-        verbose_name='answer',
-        limit_choices_to=limit,
-        null=True,
-        blank=True
-    )
-    object_id = models.PositiveIntegerField(
-        verbose_name='related object',
-        null=True
-    )
-    content_object = GenericForeignKey('content_type', 'object_id')
-
+    exception = models.ForeignKey(RuleException)
     question = models.ForeignKey(Question)
 
     def __str__(self):
-        pass
+        return ''
